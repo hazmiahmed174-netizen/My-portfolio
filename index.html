@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معرض أعمالي المتطور | Portfolio</title>
+    <title>معرض أعمالي | Portfolio</title>
     <style>
         * {
             box-sizing: border-box;
@@ -86,18 +86,35 @@
             font-size: 0.9rem;
         }
 
+        /* تنسيق شبكة معرض الصور والأعمال */
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
             margin-top: 1rem;
         }
 
         .project-card {
             background: #0f172a;
-            padding: 1.2rem;
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid #334155;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-bottom: 1px solid #334155;
+        }
+
+        .project-info {
+            padding: 1.2rem;
         }
 
         .project-card h3 {
@@ -111,25 +128,41 @@
             font-size: 0.9rem;
         }
 
+        /* تنسيق أزرار التواصل */
         .contact-links {
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
         .btn {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             padding: 0.75rem 1.5rem;
-            background-color: #38bdf8;
-            color: #0f172a;
             font-weight: bold;
             text-decoration: none;
             border-radius: 8px;
             transition: all 0.3s;
+            font-size: 0.95rem;
         }
 
-        .btn:hover {
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: #ffffff;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #1eb854;
+        }
+
+        .btn-github {
+            background-color: #38bdf8;
+            color: #0f172a;
+        }
+
+        .btn-github:hover {
             background-color: #0284c7;
             color: #ffffff;
         }
@@ -145,48 +178,62 @@
 <body>
 
     <header>
-        <!-- يمكنك تغيير الرابط أدناه برابط صورتك الشخصية -->
         <img src="https://via.placeholder.com/150" alt="الصورة الشخصية" class="profile-img">
-        <h1>مرحباً بك في موقعي الشخصي</h1>
-        <p>مطور مواقع متدرب | مهتم بالذكاء الاصطناعي</p>
+        <h1>مرحباً بك في عالمي البرمجي</h1>
+        <p>مطور مواقع متدرب | شغوف بالذكاء الاصطناعي والتصميم الحديث</p>
     </header>
 
     <div class="container">
         <section id="about">
             <h2>نبذة عني</h2>
-            <p>أنا أطور مهاراتي في تصميم وبناء التطبيقات والمواقف التفاعلية باستعمال أدوات الذكاء الاصطناعي الحديثة مثل GitHub و Vercel و Qwen Coder.</p>
+            <p>أنا مطور واجهات موقع متدرب، أقوم ببناء وتصميم منصات تفاعلية مستعيناً بأحدث تقنيات أدوات الذكاء الاصطناعي. أطمح لتقديم حلول برمجية بسيطة، سريعة، ومريحة للمستخدم.</p>
         </section>
 
         <section id="skills">
-            <h2>المهارات الأدوات</h2>
+            <h2>المهارات والأدوات</h2>
             <ul class="skills-list">
                 <li>HTML5 & CSS3</li>
                 <li>GitHub</li>
                 <li>Vercel</li>
                 <li>Qwen Coder</li>
-                <li>تصميم الواجهات</li>
+                <li>تطوير الواجهات</li>
             </ul>
         </section>
 
+        <!-- قسم صور وأعمال المشاريع -->
         <section id="projects">
-            <h2>مشاريعي القادمة</h2>
+            <h2>معرض الأعمال والمشاريع</h2>
             <div class="projects-grid">
+                
+                <!-- مشروع 1 -->
                 <div class="project-card">
-                    <h3>معرض الأعمال الشخصي</h3>
-                    <p>الموقع الحالي - منشور ومستضاف على منصة Vercel.</p>
+                    <img src="https://via.placeholder.com/400x200/1e293b/38bdf8?text=Portfolio+Project" alt="صورة المشروع الأول">
+                    <div class="project-info">
+                        <h3>معرض الأعمال الشخصي</h3>
+                        <p>موقع تفاعلي مبني باستخدام HTML و CSS ومستضاف بالكامل على منصة Vercel.</p>
+                    </div>
                 </div>
+
+                <!-- مشروع 2 -->
                 <div class="project-card">
-                    <h3>مشروع الذكاء الاصطناعي</h3>
-                    <p>تطبيق تفاعلي قيد التحديث والإنشاء قريباً.</p>
+                    <img src="https://via.placeholder.com/400x200/1e293b/38bdf8?text=AI+Project" alt="صورة المشروع الثاني">
+                    <div class="project-info">
+                        <h3>تطبيق ذكاء اصطناعي</h3>
+                        <p>واجهة أداة توظف نماذج الذكاء الاصطناعي للمساعدة في توليد النصوص والأكواد.</p>
+                    </div>
                 </div>
+
             </div>
         </section>
 
+        <!-- قسم التواصل ورابط الواتساب -->
         <section id="contact">
-            <h2>التواصل معي</h2>
-            <p>سعيد بتواصلك معي لأي استفسار أو للتعاون في أعمال جديدة:</p>
+            <h2>التواصل المباشر</h2>
+            <p>يسعدني تواصلك معي للتباحث حول مشاريع جديدة أو الاستفسارات:</p>
             <div class="contact-links">
-                <a href="https://github.com" target="_blank" class="btn">حسابي على GitHub</a>
+                <!-- استبدل الرقم 967000000000 برقم هاتفك مع رمز الدولة -->
+                <a href="https://wa.me/967000000000" target="_blank" class="btn btn-whatsapp">تواصل عبر الواتساب 💬</a>
+                <a href="https://github.com" target="_blank" class="btn btn-github">حسابي على GitHub 🐙</a>
             </div>
         </section>
     </div>
