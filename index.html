@@ -1,261 +1,145 @@
---- src/index.css (原始)
-@import "tailwindcss";
+import { useState, type CSSProperties, type FormEvent } from "react";
+import { contactChannels, profile } from "../data";
+import {
+  IconArrowUpLeft,
+  IconCalendar,
+  IconGitHub,
+  IconLinkedIn,
+  IconMail,
+  IconSend,
+  IconWhatsApp,
+  IconX,
+} from "../icons";
 
+const channelIcons = {
+  mail: IconMail,
+  whatsapp: IconWhatsApp,
+  github: IconGitHub,
+  linkedin: IconLinkedIn,
+  x: IconX,
+  calendar: IconCalendar,
+} as const;
 
-+++ src/index.css (修改后)
-@import "tailwindcss";
+export default function Contact({ onToast }: { onToast: (msg: string) => void }) {
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
 
-/* ─── نظام الألوان: Slate مريح للعين ─────────────────────────── */
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #0b1220;
-  --bg-soft: #0e1628;
-  --panel: #111b2e;
-  --panel-2: #16233b;
-  --panel-3: #1c2b49;
-  --border: #24344f;
-  --border-soft: #1b2942;
-  --text: #e7edf7;
-  --muted: #94a5c2;
-  --faint: #5d7093;
-  --accent: #2dd4bf;
-  --accent-strong: #14b8a6;
-  --accent-ink: #05201d;
-  --accent-soft: rgba(45, 212, 191, 0.12);
-  --amber: #fbbf24;
-  --amber-soft: rgba(251, 191, 36, 0.13);
-  --sky: #38bdf8;
-  --sky-soft: rgba(56, 189, 248, 0.13);
-  --rose: #fb7185;
-  --rose-soft: rgba(251, 113, 133, 0.13);
-  --grid-line: rgba(148, 163, 184, 0.06);
-  --glow-a: rgba(20, 184, 166, 0.13);
-  --glow-b: rgba(251, 191, 36, 0.07);
-  --shadow: 0 20px 45px -20px rgba(2, 8, 20, 0.9);
-}
-:root[data-theme="light"] {
-  color-scheme: light;
-  --bg: #edf1f7;
-  --bg-soft: #e5ebf4;
-  --panel: #f8fafd;
-  --panel-2: #eef2f9;
-  --panel-3: #e2e9f3;
-  --border: #d4deea;
-  --border-soft: #e0e7f0;
-  --text: #17233a;
-  --muted: #57688a;
-  --faint: #8494b0;
-  --accent: #0d9488;
-  --accent-strong: #0f766e;
-  --accent-ink: #f0fdfa;
-  --accent-soft: rgba(13, 148, 136, 0.11);
-  --amber: #d97706;
-  --amber-soft: rgba(217, 119, 6, 0.13);
-  --sky: #0284c7;
-  --sky-soft: rgba(2, 132, 199, 0.11);
-  --rose: #e11d48;
-  --rose-soft: rgba(225, 29, 72, 0.09);
-  --grid-line: rgba(71, 85, 105, 0.08);
-  --glow-a: rgba(13, 148, 136, 0.1);
-  --glow-b: rgba(217, 119, 6, 0.07);
-  --shadow: 0 20px 45px -24px rgba(30, 41, 59, 0.35);
-}
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    const subject = encodeURIComponent(`تواصل من المعرض — ${form.name || "زائر"}`);
+    const body = encodeURIComponent(`${form.message}\n\n— ${form.name}\n${form.email}`);
+    window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+    onToast("جارٍ فتح تطبيق البريد لإرسال رسالتك");
+    setForm({ name: "", email: "", message: "" });
+  };
 
-html {
-  scroll-behavior: smooth;
-}
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
-  transition: background-color 0.45s ease, color 0.45s ease;
-  overflow-x: clip;
-}
-section[id] {
-  scroll-margin-top: 92px;
-}
-::selection {
-  background: var(--accent);
-  color: var(--accent-ink);
-}
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-  border-radius: 6px;
-}
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--panel-3);
-  border-radius: 999px;
-  border: 2px solid var(--bg);
-}
+  return (
+    <section id="contact" className="px-4 pt-16 sm:px-6 lg:px-8">
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p data-reveal className="kicker">{"// 05 · التواصل"}</p>
+          <h2 data-reveal style={{ "--d": "70ms" } as CSSProperties} className="font-display mt-2 text-3xl font-bold sm:text-4xl">
+            لنبنِ شيئًا <span style={{ color: "var(--accent)" }}>مميزًا</span> معًا
+          </h2>
+        </div>
+        <p data-reveal style={{ "--d": "120ms" } as CSSProperties} className="max-w-xs text-[13px] leading-6 text-[var(--muted)]">
+          مشروع جديد، تعاون، أو حتى سؤال عابر — كل القنوات مفتوحة والرد خلال يوم واحد.
+        </p>
+      </div>
 
-/* ─── خطوط ───────────────────────────────────────────────────── */
-.font-display {
-  font-family: "Changa", "IBM Plex Sans Arabic", sans-serif;
-}
-.font-mono2 {
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  letter-spacing: -0.02em;
-}
-.tnum {
-  font-feature-settings: "tnum";
-  font-variant-numeric: tabular-nums;
-}
+      <div className="mt-6 grid gap-5 lg:grid-cols-[1fr_1.15fr]">
+        {/* قنوات التواصل */}
+        <div data-reveal className="grid content-start gap-3 sm:grid-cols-2">
+          {contactChannels.map((ch, i) => {
+            const Icon = channelIcons[ch.icon];
+            return (
+              <a
+                key={ch.id}
+                href={ch.href}
+                target={ch.id === "email" ? undefined : "_blank"}
+                rel="noreferrer"
+                data-reveal
+                style={{ "--d": `${i * 70}ms` } as CSSProperties}
+                className="panel lift group flex items-center gap-3.5 p-4"
+              >
+                <span
+                  className="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-[var(--border-soft)] transition-transform duration-300 group-hover:scale-110"
+                  style={{ background: ch.tint, color: "var(--accent)" }}
+                >
+                  <Icon className={ch.icon === "whatsapp" || ch.icon === "github" || ch.icon === "linkedin" || ch.icon === "x" ? "h-4.5 w-4.5" : "h-5 w-5"} />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[14px] font-semibold">{ch.label}</span>
+                  <span className="font-mono2 block truncate text-[11.5px] text-[var(--faint)]" dir="ltr">
+                    {ch.sub}
+                  </span>
+                </span>
+                <IconArrowUpLeft className="h-4 w-4 shrink-0 text-[var(--faint)] transition-all duration-300 group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--accent)]" />
+              </a>
+            );
+          })}
+          <div className="panel flex items-center gap-3 p-4 sm:col-span-2" style={{ background: "var(--accent-soft)", borderColor: "color-mix(in srgb, var(--accent) 30%, var(--border))" }}>
+            <span className="pulse-dot h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: "var(--accent)", color: "var(--accent)" }} />
+            <p className="text-[13px] font-medium" style={{ color: "var(--accent)" }}>
+              متاح حاليًا لمشروعين جديدين هذا الربع — احجز مكانك مبكرًا.
+            </p>
+          </div>
+        </div>
 
-/* ─── مكوّنات (طبقة components كي تتفوق عليها أدوات Tailwind) ── */
-@layer components {
-  /* الظهور عند التمرير — :where حتى تتفوق حالات hover */
-  :where([data-reveal]) {
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
-    transition-delay: var(--d, 0ms);
-  }
-  :where([data-reveal].in) {
-    opacity: 1;
-    transform: none;
-  }
+        {/* نموذج الرسالة */}
+        <form data-reveal style={{ "--d": "150ms" } as CSSProperties} onSubmit={submit} className="panel relative overflow-hidden p-6">
+          <div className="pointer-events-none absolute -top-14 -start-14 h-40 w-40 rounded-full blur-3xl" style={{ background: "var(--glow-b)" }} />
+          <p className="font-mono2 text-[11px] tracking-widest text-[var(--faint)]">رسالة سريعة</p>
+          <h3 className="font-display mt-1.5 text-xl font-bold">أخبرني عن فكرتك</h3>
 
-  /* أشرطة المهارات تمتلئ عند الظهور */
-  .bar-fill {
-    width: 0%;
-    transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-    transition-delay: var(--d, 0ms);
-  }
-  .in .bar-fill {
-    width: var(--w);
-  }
+          <div className="mt-5 grid gap-3.5 sm:grid-cols-2">
+            <label className="block">
+              <span className="mb-1.5 block text-[13px] font-medium text-[var(--muted)]">الاسم</span>
+              <input
+                required
+                value={form.name}
+                onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
+                placeholder="اسمك الكريم"
+                className="field"
+              />
+            </label>
+            <label className="block">
+              <span className="mb-1.5 block text-[13px] font-medium text-[var(--muted)]">البريد الإلكتروني</span>
+              <input
+                required
+                type="email"
+                dir="ltr"
+                value={form.email}
+                onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+                placeholder="you@example.com"
+                className="field"
+              />
+            </label>
+          </div>
+          <label className="mt-3.5 block">
+            <span className="mb-1.5 block text-[13px] font-medium text-[var(--muted)]">الرسالة</span>
+            <textarea
+              required
+              rows={5}
+              value={form.message}
+              onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
+              placeholder="فكرة المشروع، الميزانية التقريبية، والجدول الزمني المتوقع…"
+              className="field resize-none"
+            />
+          </label>
 
-  .panel {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-  }
-  .lift {
-    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s,
-      box-shadow 0.35s, opacity 0.35s;
-  }
-  .lift:hover {
-    transform: translateY(-5px);
-    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
-    box-shadow: var(--shadow);
-  }
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 3px 11px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 500;
-    background: var(--panel-2);
-    border: 1px solid var(--border-soft);
-    color: var(--muted);
-    white-space: nowrap;
-  }
-  .kicker {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 12px;
-    letter-spacing: 0.14em;
-    color: var(--accent);
-  }
-  .field {
-    width: 100%;
-    background: var(--panel-2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 11px 14px;
-    color: var(--text);
-    font: inherit;
-    font-size: 14px;
-    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
-  }
-  .field::placeholder {
-    color: var(--faint);
-  }
-  .field:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-soft);
-    background: var(--panel);
-  }
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+            <p className="font-mono2 text-[11px] text-[var(--faint)]">متوسط زمن الرد · أقل من 24 ساعة</p>
+            <button
+              type="submit"
+              className="group inline-flex items-center gap-2.5 rounded-xl px-6 py-3 text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+              style={{ background: "var(--accent)", color: "var(--accent-ink)" }}
+            >
+              أرسل الرسالة
+              <IconSend className="h-4 w-4 -scale-x-100 transition-transform duration-300 group-hover:-translate-x-1 group-hover:-translate-y-0.5" />
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  );
 }
-
-/* ─── حركات ─────────────────────────────────────────────────── */
-@keyframes ping-soft {
-  0% { transform: scale(1); opacity: 0.9; }
-  80%, 100% { transform: scale(2.4); opacity: 0; }
-}
-.pulse-dot {
-  position: relative;
-}
-.pulse-dot::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  background: currentColor;
-  animation: ping-soft 1.9s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-@keyframes spin-slow {
-  to { transform: rotate(360deg); }
-}
-.spin-slow {
-  animation: spin-slow 10s linear infinite;
-}
-@keyframes floaty {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-9px); }
-}
-.floaty {
-  animation: floaty 5.5s ease-in-out infinite;
-}
-@keyframes marquee {
-  to { transform: translateX(50%); }
-}
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 38s linear infinite;
-}
-.marquee-track:hover {
-  animation-play-state: paused;
-}
-@keyframes toast-in {
-  from { opacity: 0; transform: translateY(14px) scale(0.97); }
-  to { opacity: 1; transform: none; }
-}
-.toast-in {
-  animation: toast-in 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
-@keyframes drawer-in {
-  from { transform: translateX(100%); }
-  to { transform: none; }
-}
-[dir="rtl"] .drawer-in {
-  animation: drawer-in 0.32s cubic-bezier(0.22, 1, 0.36, 1);
-}
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-.fade-in {
-  animation: fade-in 0.3s ease;
-}
-
-/* خلفية شبكية */
-.grid-layer {
-  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-size: 46px 46px;
-  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 35%, transparent 78%);
-}
-
